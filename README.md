@@ -7,7 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5+-blue.svg)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3+-38bdf8.svg)](https://tailwindcss.com/)
 
-**Backend API:** [tz-tourism](https://github.com/yourusername/tz-tourism)
+**Backend API:** [tz-tourism](https://github.com/cleven12/tz-tourism)
 
 ---
 
@@ -15,7 +15,7 @@
 
 Web frontend for TZ Tourism platform - a modern Next.js application consuming the TZ Tourism REST API.
 
-**Backend repository:** [tz-tourism](https://github.com/yourusername/tz-tourism)
+**Backend repository:** [tz-tourism](https://github.com/cleven12/tz-tourism)
 
 ---
 
@@ -38,8 +38,8 @@ tz-tourism-web/
 
 ```bash
 # Clone and install
-git clone https://github.com/yourusername/tz-tourism-web.git
-cd tz-tourism-web
+git clone https://github.com/cleven12/tz-tourism-frontend.git
+cd tz-tourism-frontend
 npm install
 
 # Setup environment
