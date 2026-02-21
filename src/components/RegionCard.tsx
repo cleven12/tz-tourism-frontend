@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { MapPin, ArrowRight } from 'lucide-react'
 import type { Region } from '@/mockdata'
 
 export default function RegionCard({ region }: { region: Region }) {
@@ -27,11 +28,8 @@ export default function RegionCard({ region }: { region: Region }) {
       {/* Content at bottom */}
       <div className="relative flex flex-col justify-end flex-1 p-6">
         <div className="flex items-center gap-2 mb-2">
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-medium text-white/90">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-medium text-white/90">
+            <MapPin className="w-3 h-3" />
             {region.attraction_count} attraction{region.attraction_count !== 1 ? 's' : ''}
           </span>
         </div>
@@ -47,9 +45,7 @@ export default function RegionCard({ region }: { region: Region }) {
         {/* Explore CTA */}
         <div className="mt-4 flex items-center gap-2 text-amber-400 text-sm font-semibold transition-all group-hover:gap-3">
           <span>Explore Region</span>
-          <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
         </div>
       </div>
     </Link>

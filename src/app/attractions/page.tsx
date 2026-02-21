@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
+import { Search, SlidersHorizontal } from 'lucide-react'
 import { attractions } from '@/mockdata'
 import type { AttractionListItem } from '@/mockdata'
 import AttractionCard from '@/components/AttractionCard'
@@ -30,14 +31,19 @@ const regionOptions = [
 export default function AttractionsPage() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [activeRegion, setActiveRegion] = useState('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const filtered = useMemo(() => {
     return allAttractions.filter((a) => {
       const matchCategory = activeCategory === 'all' || a.category === activeCategory
       const matchRegion = activeRegion === 'all' || a.region_name === activeRegion
-      return matchCategory && matchRegion
+      const matchSearch =
+        !searchQuery ||
+        a.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        a.short_description.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchCategory && matchRegion && matchSearch
     })
-  }, [activeCategory, activeRegion])
+  }, [activeCategory, activeRegion, searchQuery])
 
   return (
     <>
@@ -60,18 +66,51 @@ export default function AttractionsPage() {
             Explore Attractions
           </h1>
           <p className="mt-2 text-white/70 max-w-xl text-pretty">
-            {allAttractions.length} carefully curated destinations across Tanzania&apos;s most
-            remarkable regions.
+            {allAttractions.length} carefully curated destinations across
+            Tanzania&apos;s most remarkable regions.
           </p>
         </div>
       </section>
 
       {/* Filters */}
-      <section className="sticky top-16 lg:top-20 z-30 bg-stone-50/95 backdrop-blur-md border-b border-stone-200">
+      <section className="sticky top-16 lg:top-[4.5rem] z-30 bg-stone-50/95 backdrop-blur-md border-b border-stone-200">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex flex-col gap-4">
+            {/* Search + region */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              {/* Search input */}
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search attractions..."
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white text-sm text-stone-700 ring-1 ring-stone-200 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-safari-500 transition-shadow"
+                  aria-label="Search attractions"
+                />
+              </div>
+
+              {/* Region dropdown */}
+              <div className="relative flex items-center">
+                <SlidersHorizontal className="absolute left-3 w-4 h-4 text-stone-400 pointer-events-none" />
+                <select
+                  value={activeRegion}
+                  onChange={(e) => setActiveRegion(e.target.value)}
+                  className="pl-10 pr-8 py-2.5 rounded-lg bg-white text-sm font-medium text-stone-700 ring-1 ring-stone-200 focus:outline-none focus:ring-2 focus:ring-safari-500 transition-shadow appearance-none cursor-pointer"
+                  aria-label="Filter by region"
+                >
+                  {regionOptions.map((r) => (
+                    <option key={r.value} value={r.value}>
+                      {r.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             {/* Category pills */}
-            <div className="flex-1 overflow-x-auto">
+            <div className="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
               <div className="flex items-center gap-2">
                 {categories.map((cat) => (
                   <button
@@ -88,18 +127,6 @@ export default function AttractionsPage() {
                 ))}
               </div>
             </div>
-
-            {/* Region dropdown */}
-            <select
-              value={activeRegion}
-              onChange={(e) => setActiveRegion(e.target.value)}
-              className="px-4 py-2 rounded-lg bg-white text-sm font-medium text-stone-700 ring-1 ring-stone-200 focus:outline-none focus:ring-2 focus:ring-safari-500 transition-shadow"
-              aria-label="Filter by region"
-            >
-              {regionOptions.map((r) => (
-                <option key={r.value} value={r.value}>{r.label}</option>
-              ))}
-            </select>
           </div>
         </div>
       </section>
@@ -109,13 +136,30 @@ export default function AttractionsPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Result count */}
           <p className="text-sm text-stone-500 mb-6">
-            Showing <span className="font-semibold text-stone-800">{filtered.length}</span>{' '}
+            Showing{' '}
+            <span className="font-semibold text-stone-800">{filtered.length}</span>{' '}
             attraction{filtered.length !== 1 ? 's' : ''}
             {activeCategory !== 'all' && (
-              <span> in <span className="font-medium text-safari-700">{categories.find(c => c.value === activeCategory)?.label}</span></span>
+              <span>
+                {' '}
+                in{' '}
+                <span className="font-medium text-safari-700">
+                  {categories.find((c) => c.value === activeCategory)?.label}
+                </span>
+              </span>
             )}
             {activeRegion !== 'all' && (
-              <span> &middot; <span className="font-medium text-safari-700">{activeRegion}</span></span>
+              <span>
+                {' '}
+                &middot;{' '}
+                <span className="font-medium text-safari-700">{activeRegion}</span>
+              </span>
+            )}
+            {searchQuery && (
+              <span>
+                {' '}
+                &middot; &quot;{searchQuery}&quot;
+              </span>
             )}
           </p>
 
@@ -127,15 +171,19 @@ export default function AttractionsPage() {
             </div>
           ) : (
             <div className="text-center py-20">
-              <svg className="w-16 h-16 mx-auto text-stone-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <h3 className="text-lg font-semibold text-stone-700">No attractions found</h3>
+              <Search className="w-16 h-16 mx-auto text-stone-300 mb-4" />
+              <h3 className="text-lg font-semibold text-stone-700">
+                No attractions found
+              </h3>
               <p className="text-sm text-stone-500 mt-1">
                 Try adjusting your filters to discover more destinations.
               </p>
               <button
-                onClick={() => { setActiveCategory('all'); setActiveRegion('all') }}
+                onClick={() => {
+                  setActiveCategory('all')
+                  setActiveRegion('all')
+                  setSearchQuery('')
+                }}
                 className="mt-4 px-5 py-2 rounded-lg bg-safari-700 text-white text-sm font-medium hover:bg-safari-600 transition-colors"
               >
                 Clear Filters

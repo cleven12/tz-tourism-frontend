@@ -2,6 +2,7 @@ import { featuredAttractions } from '@/mockdata'
 import type { AttractionListItem } from '@/mockdata'
 import AttractionCard from '@/components/AttractionCard'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 export default function FeaturedSection() {
   const items = featuredAttractions as AttractionListItem[]
@@ -19,8 +20,8 @@ export default function FeaturedSection() {
               Featured Destinations
             </h2>
             <p className="mt-3 text-stone-500 max-w-xl text-pretty">
-              Tanzania&apos;s most iconic attractions, curated from Kilimanjaro&apos;s
-              peak to Zanzibar&apos;s pristine coastline.
+              Tanzania&apos;s most iconic attractions, curated from
+              Kilimanjaro&apos;s peak to Zanzibar&apos;s pristine coastline.
             </p>
           </div>
           <Link
@@ -28,9 +29,7 @@ export default function FeaturedSection() {
             className="inline-flex items-center gap-2 text-sm font-semibold text-safari-700 hover:text-safari-600 transition-colors shrink-0"
           >
             View all attractions
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+            <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 

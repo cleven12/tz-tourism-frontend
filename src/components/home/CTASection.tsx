@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowRight, MapPin } from 'lucide-react'
 
 export default function CTASection() {
   return (
@@ -27,17 +28,16 @@ export default function CTASection() {
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             href="/attractions"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-amber-500 text-stone-900 font-bold transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-amber-500 text-stone-900 font-bold transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25 active:scale-[0.98]"
           >
             Start Exploring
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
+            <ArrowRight className="w-5 h-5" />
           </Link>
           <Link
             href="/regions"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-bold border border-white/20 hover:bg-white/20 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 backdrop-blur-sm text-white font-bold border border-white/20 hover:bg-white/20 transition-all active:scale-[0.98]"
           >
+            <MapPin className="w-5 h-5" />
             Browse Regions
           </Link>
         </div>

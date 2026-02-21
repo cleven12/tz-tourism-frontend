@@ -1,9 +1,19 @@
 import Link from 'next/link'
+import {
+  Compass,
+  MapPin,
+  Mail,
+  Phone,
+  Github,
+  ExternalLink,
+  Heart,
+} from 'lucide-react'
 
 const quickLinks = [
   { href: '/', label: 'Home' },
   { href: '/attractions', label: 'Attractions' },
   { href: '/regions', label: 'Regions' },
+  { href: '/about', label: 'About' },
 ]
 
 const regionLinks = [
@@ -12,40 +22,80 @@ const regionLinks = [
   { href: '/regions/zanzibar', label: 'Zanzibar' },
 ]
 
+const projectLinks = [
+  {
+    href: 'https://github.com/cleven12/tz-tourism-frontend',
+    label: 'Frontend (Next.js)',
+    external: true,
+  },
+  {
+    href: 'https://github.com/cleven12/tz-tourism',
+    label: 'Backend API (Django)',
+    external: true,
+  },
+]
+
 export default function Footer() {
   return (
     <footer className="bg-stone-900 text-stone-300">
+      {/* Newsletter / CTA strip */}
+      <div className="border-b border-stone-800">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-lg font-bold text-white">
+              Ready to explore Tanzania?
+            </h3>
+            <p className="text-sm text-stone-400 mt-0.5">
+              Start planning your adventure with GPS-accurate guides.
+            </p>
+          </div>
+          <Link
+            href="/attractions"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-amber-500 text-stone-900 text-sm font-semibold hover:bg-amber-400 transition-colors shrink-0"
+          >
+            Plan Your Trip
+          </Link>
+        </div>
+      </div>
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Main Footer */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
-          <div className="lg:col-span-1">
+        {/* Main Footer Grid */}
+        <div className="py-14 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+          {/* Brand column - wider */}
+          <div className="lg:col-span-2">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-safari-600">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-5 h-5 text-white"
-                  aria-hidden="true"
-                >
-                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                  <path d="M2 17l10 5 10-5" />
-                  <path d="M2 12l10 5 10-5" />
-                </svg>
+                <Compass className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-white tracking-tight">
-                TZ Tourism
-              </span>
+              <div className="flex flex-col">
+                <span className="text-base font-bold text-white tracking-tight leading-none">
+                  TZ Tourism
+                </span>
+                <span className="text-[10px] text-stone-500 tracking-wider uppercase leading-none mt-0.5">
+                  Discover Tanzania
+                </span>
+              </div>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed text-stone-400 text-pretty">
+            <p className="mt-4 text-sm leading-relaxed text-stone-400 max-w-xs text-pretty">
               Your GPS-accurate guide to Tanzania&apos;s most breathtaking
-              destinations. From the summit of Kilimanjaro to the shores of
-              Zanzibar, discover Africa&apos;s finest adventures.
+              destinations. Open-source, free, and community-driven.
             </p>
+            {/* GitHub links */}
+            <div className="mt-5 flex flex-col gap-2">
+              {projectLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs text-stone-500 hover:text-amber-400 transition-colors"
+                >
+                  <Github className="w-3.5 h-3.5" />
+                  {link.label}
+                  <ExternalLink className="w-2.5 h-2.5" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -93,22 +143,15 @@ export default function Footer() {
             </h3>
             <ul className="space-y-4 text-sm text-stone-400">
               <li className="flex items-start gap-3">
-                <svg className="w-4 h-4 mt-0.5 shrink-0 text-safari-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-safari-500" />
                 <span>Arusha, Tanzania</span>
               </li>
               <li className="flex items-start gap-3">
-                <svg className="w-4 h-4 mt-0.5 shrink-0 text-safari-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+                <Mail className="w-4 h-4 mt-0.5 shrink-0 text-safari-500" />
                 <span>info@tztourism.co.tz</span>
               </li>
               <li className="flex items-start gap-3">
-                <svg className="w-4 h-4 mt-0.5 shrink-0 text-safari-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                </svg>
+                <Phone className="w-4 h-4 mt-0.5 shrink-0 text-safari-500" />
                 <span>+255 123 456 789</span>
               </li>
             </ul>
@@ -118,10 +161,11 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-stone-800 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-stone-500">
-            &copy; {new Date().getFullYear()} TZ Tourism. All rights reserved.
+            &copy; {new Date().getFullYear()} TZ Tourism. MIT License &mdash;
+            Free to use, modify, and distribute.
           </p>
-          <p className="text-xs text-stone-600">
-            Open-source tourism platform for Tanzania
+          <p className="text-xs text-stone-600 flex items-center gap-1">
+            Built with <Heart className="w-3 h-3 text-red-500" /> in Tanzania
           </p>
         </div>
       </div>
